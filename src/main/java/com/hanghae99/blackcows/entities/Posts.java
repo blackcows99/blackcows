@@ -27,17 +27,17 @@ public class Posts extends TimeStamp {
     @Column(nullable = false)
     private String img;
 
-    @Column(nullable = false)
-    private Category ALL;
+    @Column(columnDefinition = "integer default 0")
+    private int category;
 
     @Column(nullable = false)
     private int score;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Member.class ,fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "posts")
+    @OneToMany(targetEntity = Comment.class,mappedBy = "posts")
     private List<Comment> comment;
 
 

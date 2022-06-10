@@ -22,3 +22,5 @@ public class Comment extends TimeStamp {
     @JoinColumn(name = "POSTS_ID")
     private Posts posts;
 }
+
+// comment_id /   content / p

@@ -12,7 +12,6 @@ public class Member extends TimeStamp{
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "MEMBER_ID")
     private Long id;
 
     @Column(nullable = false)
