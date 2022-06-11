@@ -2,6 +2,7 @@ package com.hanghae99.blackcows.services;
 
 import com.hanghae99.blackcows.dto.PostFindRequestDto;
 import com.hanghae99.blackcows.dto.PostFindResponseDto;
+import com.hanghae99.blackcows.dto.PostUpdateRequestDto;
 import com.hanghae99.blackcows.dto.PostWriteRequestDto;
 import com.hanghae99.blackcows.entities.Category;
 import com.hanghae99.blackcows.entities.Posts;
@@ -48,5 +49,10 @@ public class PostsService {
                     .build());
         }
         return responseDtos;
+    }
+
+    //게시글 수정 메소드
+    public void update(PostUpdateRequestDto requestDto) {
+        
     }
 }

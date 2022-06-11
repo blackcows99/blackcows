@@ -1,6 +1,5 @@
 package com.hanghae99.blackcows.dto;
 
-import com.hanghae99.blackcows.entities.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
