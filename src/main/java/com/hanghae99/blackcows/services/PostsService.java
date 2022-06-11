@@ -1,8 +1,6 @@
 package com.hanghae99.blackcows.services;
 
-import com.hanghae99.blackcows.dto.PostFindRequestDto;
 import com.hanghae99.blackcows.dto.PostFindResponseDto;
-import com.hanghae99.blackcows.dto.PostUpdateRequestDto;
 import com.hanghae99.blackcows.dto.PostWriteRequestDto;
 import com.hanghae99.blackcows.entities.Category;
 import com.hanghae99.blackcows.entities.Posts;
@@ -26,7 +24,7 @@ public class PostsService {
     }
 
     //전체 포스트 가져오기
-    public List<PostFindResponseDto> findAll(PostFindRequestDto requestDto) {
+    public List<PostFindResponseDto> findAll() {
 
         List<PostFindResponseDto> responseDtos = new ArrayList<>();
         List<Posts> posts = postsRepository.findAll();
@@ -35,14 +33,14 @@ public class PostsService {
             responseDtos.add(PostFindResponseDto.builder()
                     .id(r.getId())
                     .contents(r.getContents())
-                    .member(r.getMember().getName())
+//                    .member(r.getMember().getName())
                     .img(r.getImg())
                     .score(r.getScore())
-                    .category(Category.getName(r.getCategory()))
+                    .category(r.getCategory())
                     .build());
         }
         return responseDtos;
     }
 
-    
+
 }

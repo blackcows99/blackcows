@@ -24,13 +24,13 @@ public class PostsController {
 
     //모든 게시글 조회 API
     @GetMapping("/api/posts")
-    public List<PostFindResponseDto> findPosts(@RequestBody PostFindRequestDto requestDto) {
-        return postsService.findAll(requestDto);
+    public List<PostFindResponseDto> findPosts() {
+        return postsService.findAll();
     }
 
     //게시글 수정 API
-    @PatchMapping("/api/post/{postId}")
-    public void updatePost(@PathVariable Long postId, @RequestBody PostUpdateRequestDto requestDto) {
-        postsService.update(requestDto);
-    }
+//    @PatchMapping("/api/post/{postId}")
+//    public void updatePost(@PathVariable Long postId, @RequestBody PostUpdateRequestDto requestDto) {
+//        postsService.update(requestDto);
+//    }
 }
