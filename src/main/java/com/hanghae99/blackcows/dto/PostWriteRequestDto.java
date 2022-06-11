@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class PostRequestDto {
+public class PostWriteRequestDto {
     private int category;
     private int score;
     private String contents;
