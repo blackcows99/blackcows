@@ -1,15 +1,16 @@
 package com.hanghae99.blackcows.controllers;
 
-import com.hanghae99.blackcows.dto.PostFindRequestDto;
 import com.hanghae99.blackcows.dto.PostUpdateRequestDto;
 import com.hanghae99.blackcows.dto.PostWriteRequestDto;
 import com.hanghae99.blackcows.dto.PostFindResponseDto;
 import com.hanghae99.blackcows.services.PostsService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 public class PostsController {
@@ -29,8 +30,9 @@ public class PostsController {
     }
 
     //게시글 수정 API
-//    @PatchMapping("/api/post/{postId}")
-//    public void updatePost(@PathVariable Long postId, @RequestBody PostUpdateRequestDto requestDto) {
-//        postsService.update(requestDto);
-//    }
+    @PatchMapping("/api/post/{postId}")
+    public void updatePost(@PathVariable Long postId, @RequestBody PostUpdateRequestDto requestDto) {
+        log.info("requestDto = {}", requestDto);
+        postsService.update(postId, requestDto);
+    }
 }

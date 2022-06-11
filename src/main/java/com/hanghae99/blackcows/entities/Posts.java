@@ -1,8 +1,11 @@
 package com.hanghae99.blackcows.entities;
 
+import com.hanghae99.blackcows.dto.PostUpdateRequestDto;
 import com.hanghae99.blackcows.dto.PostWriteRequestDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.GeneratedValue;
 
@@ -42,6 +45,14 @@ public class Posts extends TimeStamp {
     private List<Comment> comment;
 
     public Posts(PostWriteRequestDto requestDto) {
+        this.device = requestDto.getDevice();
+        this.contents = requestDto.getContents();
+        this.category = requestDto.getCategory();
+        this.score = requestDto.getScore();
+        this.img = requestDto.getImg();
+    }
+
+    public void update(PostUpdateRequestDto requestDto) {
         this.device = requestDto.getDevice();
         this.contents = requestDto.getContents();
         this.category = requestDto.getCategory();
