@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 public class PostsService {
 
     private final PostsRepository postsRepository;
-    private final Category category;
 
     //포스트 저장 메소드
     public void save(PostWriteRequestDto requestDto) {
@@ -30,7 +29,7 @@ public class PostsService {
     public List<PostFindResponseDto> findPostsByCategory(PostFindRequestDto requestDto) {
 
         List<PostFindResponseDto> responseDtos = new ArrayList<>();
-        List<Posts> posts = new ArrayList<>();
+        List<Posts> posts;
 
         if (requestDto.getCategory() == 0) {
             posts = postsRepository.findAll();
@@ -38,28 +37,16 @@ public class PostsService {
             posts = postsRepository.findAllByCategory(requestDto.getCategory());
         }
 
-        posts.stream()
-                .forEach(r ->
-                        responseDtos.add(PostFindResponseDto.builder()
-                                .id(r.getId())
-                                .contents(r.getContents())
-                                .member(r.getMember())
-                                .img(r.getImg())
-                                .score(r.getScore())
-                                .category(category.getName(r.getCategory()))
-                                .build()));
-
-        return responseDtos = postsRepository.findAll()
-                .stream()
-                .map(r ->
-                     PostFindResponseDto.builder()
-                             .id(r.getId())
-                             .contents(r.getContents())
-                             .member(r.getMember())
-                             .img(r.getImg())
-                             .score(r.getScore())
-                             .category(category.getName(r.getCategory()))
-                             .build())
-                .collect(Collectors.toList());
+        for(Posts r : posts) {
+            responseDtos.add(PostFindResponseDto.builder()
+                    .id(r.getId())
+                    .contents(r.getContents())
+                    .member(r.getMember())
+                    .img(r.getImg())
+                    .score(r.getScore())
+                    .category(Category.getName(r.getCategory()))
+                    .build());
+        }
+        return responseDtos;
     }
 }
