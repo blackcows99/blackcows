@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class PostFindResponseDto {
     private Long id;
-    private Member member;
+    private String member;
     private String contents;
     private String img;
     private String category;

@@ -41,7 +41,7 @@ public class PostsService {
             responseDtos.add(PostFindResponseDto.builder()
                     .id(r.getId())
                     .contents(r.getContents())
-                    .member(r.getMember())
+                    .member(r.getMember().getName())
                     .img(r.getImg())
                     .score(r.getScore())
                     .category(Category.getName(r.getCategory()))
