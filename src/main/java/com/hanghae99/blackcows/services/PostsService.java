@@ -34,6 +34,7 @@ public class PostsService {
                     .id(r.getId())
                     .contents(r.getContents())
 //                    .member(r.getMember().getName())
+                    .device(r.getDevice())
                     .img(r.getImg())
                     .score(r.getScore())
                     .category(r.getCategory())
@@ -41,6 +42,9 @@ public class PostsService {
         }
         return responseDtos;
     }
+
+    //게시글 수정하기
+
 
 
 }

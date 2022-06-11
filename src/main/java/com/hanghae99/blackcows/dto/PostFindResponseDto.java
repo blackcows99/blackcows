@@ -14,6 +14,7 @@ public class PostFindResponseDto {
     private String member;
     private String contents;
     private String img;
+    private String device;
     private int category;
     private int score;
 }
