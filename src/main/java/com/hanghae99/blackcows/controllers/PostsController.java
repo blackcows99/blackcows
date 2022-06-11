@@ -1,5 +1,6 @@
 package com.hanghae99.blackcows.controllers;
 
+import com.hanghae99.blackcows.dto.PostDetailResponseDto;
 import com.hanghae99.blackcows.dto.PostUpdateRequestDto;
 import com.hanghae99.blackcows.dto.PostWriteRequestDto;
 import com.hanghae99.blackcows.dto.PostFindResponseDto;
@@ -29,6 +30,12 @@ public class PostsController {
         return postsService.findAll();
     }
 
+    //상세 페이지 조회 API
+    @GetMapping("/api/post/{postId}")
+    public PostDetailResponseDto findDetailPost(@PathVariable Long postId) {
+        return postsService.findDetail(postId);
+    }
+
     //게시글 수정 API
     @PatchMapping("/api/post/{postId}")
     public void updatePost(@PathVariable Long postId, @RequestBody PostUpdateRequestDto requestDto) {
@@ -36,6 +43,7 @@ public class PostsController {
         postsService.update(postId, requestDto);
     }
 
+    //게시물 삭제 API
     @DeleteMapping("/api/post/{postId}")
     public void deletePost(@PathVariable Long postId) {
         postsService.delete(postId);
