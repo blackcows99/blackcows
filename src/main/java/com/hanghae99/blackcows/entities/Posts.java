@@ -1,6 +1,8 @@
 package com.hanghae99.blackcows.entities;
 
+import com.hanghae99.blackcows.dto.PostRequestDto;
 import com.hanghae99.blackcows.repositories.CommentRepository;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -40,6 +42,14 @@ public class Posts extends TimeStamp {
 
     @OneToMany(targetEntity = Comment.class,mappedBy = "posts",cascade = CascadeType.ALL)
     private List<Comment> comment;
+
+    public Posts(PostRequestDto requestDto) {
+        this.device = requestDto.getDevice();
+        this.contents = requestDto.getContents();
+        this.category = requestDto.getCategory();
+        this.score = requestDto.getScore();
+        this.img = requestDto.getImg();
+    }
 
     public void addComment(Comment comment){
         this.comment.add(comment);
