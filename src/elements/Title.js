@@ -1,18 +1,31 @@
-import React from "react";
-import styled from "styled-components";
-
 const Title = (props) => {
-  const { children } = props;
-  return <TitleText>{children}</TitleText>;
-};
+    const {
+        text,
+    } = props;
+    return (
+        <strong style={{
+            padding:"5px 10px",
+            borderRadius:"5px",
+            marginTop: "10px",
+            display:"inline-block",
+            backgroundColor:"rgba(0,0,0,0.5)",
+            color:"white",
+        }}>{text}</strong>
+    )
+}
 
 Title.defaultProps = {
-  children: null,
-};
+    label: false,
+    type: "text",
+    placeholder: "입력해주세용!",
+    value: "",
+    is_submit: false,
+    is_upload: false,
+    _onChange: () => {},
+    _onSubmit: () => {},
+    margin: false,
+    width: false,
+  };
 
-const TitleText = styled.h1`
-  margin: 20px 0;
-  padding: 0;
-`;
 
 export default Title;
