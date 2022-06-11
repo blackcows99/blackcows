@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -20,23 +19,17 @@ public class PostsService {
 
     private final PostsRepository postsRepository;
 
-    //포스트 저장 메소드
+    //포스트 저장
     public void save(PostWriteRequestDto requestDto) {
         Posts posts = new Posts(requestDto);
         postsRepository.save(posts);
     }
 
-    //카테고리별 포스트 가져오기 메소드
-    public List<PostFindResponseDto> findPostsByCategory(PostFindRequestDto requestDto) {
+    //전체 포스트 가져오기
+    public List<PostFindResponseDto> findAll(PostFindRequestDto requestDto) {
 
         List<PostFindResponseDto> responseDtos = new ArrayList<>();
-        List<Posts> posts;
-
-        if (requestDto.getCategory() == 0) {
-            posts = postsRepository.findAll();
-        }else {
-            posts = postsRepository.findAllByCategory(requestDto.getCategory());
-        }
+        List<Posts> posts = postsRepository.findAll();
 
         for(Posts r : posts) {
             responseDtos.add(PostFindResponseDto.builder()
@@ -51,8 +44,5 @@ public class PostsService {
         return responseDtos;
     }
 
-    //게시글 수정 메소드
-    public void update(PostUpdateRequestDto requestDto) {
-        
-    }
+    
 }

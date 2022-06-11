@@ -22,10 +22,10 @@ public class PostsController {
         postsService.save(requestDto);
     }
 
-    //게시글 카테고리별 조회 API
+    //모든 게시글 조회 API
     @GetMapping("/api/posts")
     public List<PostFindResponseDto> findPosts(@RequestBody PostFindRequestDto requestDto) {
-        return postsService.findPostsByCategory(requestDto);
+        return postsService.findAll(requestDto);
     }
 
     //게시글 수정 API
