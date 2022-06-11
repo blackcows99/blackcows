@@ -20,9 +20,8 @@ public class PostsController {
 
     //게시글 작성 API
     @PostMapping("/api/post")
-    public int write(@RequestBody PostWriteRequestDto requestDto) {
+    public void write(@RequestBody PostWriteRequestDto requestDto) {
         postsService.save(requestDto);
-        return 0;
     }
 
     //게시글 카테고리별 조회 API
