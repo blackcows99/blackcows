@@ -35,4 +35,10 @@ public class PostsController {
         log.info("requestDto = {}", requestDto);
         postsService.update(postId, requestDto);
     }
+
+    @DeleteMapping("/api/post/{postId}")
+    public void deletePost(@PathVariable Long postId) {
+        postsService.delete(postId);
+    }
+
 }

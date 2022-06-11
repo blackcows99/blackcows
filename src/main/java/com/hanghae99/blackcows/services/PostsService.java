@@ -19,12 +19,14 @@ public class PostsService {
     private final PostsRepository postsRepository;
 
     //포스트 저장
+    @Transactional
     public void save(PostWriteRequestDto requestDto) {
         Posts posts = new Posts(requestDto);
         postsRepository.save(posts);
     }
 
     //전체 포스트 가져오기
+    @Transactional
     public List<PostFindResponseDto> findAll() {
 
         List<PostFindResponseDto> responseDtos = new ArrayList<>();
@@ -50,6 +52,11 @@ public class PostsService {
         Posts post = postsRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다!"));
         post.update(requestDto);
+    }
+
+    @Transactional
+    public void delete(Long postId) {
+        postsRepository.deleteById(postId);
     }
 
 }
