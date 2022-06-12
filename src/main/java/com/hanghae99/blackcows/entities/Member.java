@@ -2,13 +2,15 @@ package com.hanghae99.blackcows.entities;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity
-public class Member extends TimeStamp{
+public class Member extends TimeStamp {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -20,6 +22,6 @@ public class Member extends TimeStamp{
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private String password;
+//    @Column(nullable = false)
+//    private String password;
 }
