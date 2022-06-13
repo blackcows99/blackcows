@@ -1,5 +1,7 @@
 package com.hanghae99.blackcows.services;
 
+import com.hanghae99.blackcows.dto.MemberRequestDto;
+import com.hanghae99.blackcows.entities.Member;
 import com.hanghae99.blackcows.repositories.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -19,6 +21,8 @@ public class OAuthLoginService implements OAuth2UserService<OAuth2UserRequest, O
 
     private final MemberRepository repository;
 
+    private final MemberRequestDto requestDto;
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService delegate = new DefaultOAuth2UserService();
@@ -37,9 +41,26 @@ public class OAuthLoginService implements OAuth2UserService<OAuth2UserRequest, O
             System.out.println(key + ":" + attrs.get(key));
         }
 
+        // 정보가 없으면 가입
+        Member member = registerIfNeeded(requestDto);
+
         // 인증 객체를 만들어서 return 한다.
         // Collections.emptyList()는 권한 목록이다.
         return new DefaultOAuth2User(Collections.emptyList(), attrs, userNameAttributeName);
     }
 
+    // DB 유무 확인
+    private Member registerIfNeeded(MemberRequestDto requestDto) {
+        String email = requestDto.getEmail();
+        Member member = repository.findByEmail(email).orElse(null);
+
+        if (member == null) {
+            String name = requestDto.getName();
+//            String email = requestDto.getEmail();
+
+            member = new Member(name, email);
+            repository.save(member);
+        }
+        return member;
+    }
 }

@@ -19,11 +19,13 @@ public class WebSecurityConfig {
         httpSecurity
                 .csrf().disable()
                 .headers().frameOptions().disable()
+
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
+
                 .and()
                 .logout()   //  로그아웃 시 쿠키 정보 삭제
                 .logoutUrl("/logout")   // ()로 로그아웃 요청
@@ -31,6 +33,7 @@ public class WebSecurityConfig {
 //                .invalidateHttpsSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID").permitAll()
+
                 .and()
                 .oauth2Login()      //  oauth2 로그인 설정
                 .userInfoEndpoint()
