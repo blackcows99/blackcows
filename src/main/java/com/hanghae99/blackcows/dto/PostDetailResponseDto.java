@@ -21,5 +21,5 @@ public class PostDetailResponseDto {
     private String device;
     private String contents;
     private boolean isEditable;
-    private List<Comment> comments;
+    private List<CommentDto> comments;
 }

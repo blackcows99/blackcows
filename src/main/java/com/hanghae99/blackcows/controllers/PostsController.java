@@ -7,6 +7,8 @@ import com.hanghae99.blackcows.dto.PostFindResponseDto;
 import com.hanghae99.blackcows.services.PostsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,8 +34,8 @@ public class PostsController {
 
     //상세 페이지 조회 API
     @GetMapping("/api/post/{postId}")
-    public PostDetailResponseDto findDetailPost(@PathVariable Long postId) {
-        return postsService.findDetail(postId);
+    public PostDetailResponseDto findDetailPost(@PathVariable Long postId, @AuthenticationPrincipal OAuth2User user) {
+        return postsService.findDetail(postId,null);
     }
 
     //게시글 수정 API

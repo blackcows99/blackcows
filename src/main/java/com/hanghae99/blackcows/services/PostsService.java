@@ -1,17 +1,15 @@
 package com.hanghae99.blackcows.services;
 
-import com.hanghae99.blackcows.dto.PostDetailResponseDto;
-import com.hanghae99.blackcows.dto.PostFindResponseDto;
-import com.hanghae99.blackcows.dto.PostUpdateRequestDto;
-import com.hanghae99.blackcows.dto.PostWriteRequestDto;
+import com.hanghae99.blackcows.dto.*;
 import com.hanghae99.blackcows.entities.Comment;
+import com.hanghae99.blackcows.entities.Member;
 import com.hanghae99.blackcows.entities.Posts;
 import com.hanghae99.blackcows.repositories.CommentRepository;
 import com.hanghae99.blackcows.repositories.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,14 +49,15 @@ public class PostsService {
     }
 
     //상세페이지 조회
-    @Transactional
-    public PostDetailResponseDto findDetail(Long postId) {
+    @Transactional(readOnly = true)
+    public PostDetailResponseDto findDetail(Long postId, Member member) {
         // TODO: 2022-06-12 : member추가, 편집 가능여부 추가해야함!!!!
         // TODO: 2022-06-12 : 디테일 DTO에서 List<Comment>를 넣는게 맞는가?? 
         Posts post = postsRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글 입니다."));
 
-        List<Comment> comments = commentRepository.findAllByPosts_Id(postId);
+        List<CommentDto> comments = new ArrayList<>();
+        post.getComment().forEach(e->comments.add(new CommentDto(e,member)));
 
         return PostDetailResponseDto.builder()
                 .id(post.getId())
