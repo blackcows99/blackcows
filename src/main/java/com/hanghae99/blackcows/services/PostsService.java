@@ -4,6 +4,7 @@ import com.hanghae99.blackcows.dto.*;
 import com.hanghae99.blackcows.entities.Comment;
 import com.hanghae99.blackcows.entities.Member;
 import com.hanghae99.blackcows.entities.Posts;
+import com.hanghae99.blackcows.exceptions.PostException;
 import com.hanghae99.blackcows.repositories.CommentRepository;
 import com.hanghae99.blackcows.repositories.PostsRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,15 @@ public class PostsService {
 
     //포스트 저장
     @Transactional
-    public void save(PostWriteRequestDto requestDto) {
+    public void save(PostWriteRequestDto requestDto) throws PostException {
+        if(requestDto.getCategory() <1)
+            throw new PostException("카타고리를 선택해 주세요");
+        else if (requestDto.getDevice()==null || requestDto.getDevice().length()<1)
+            throw new PostException("장치 이름을 입력해 주세요");
+        else if(requestDto.getImg() == null||requestDto.getImg().length() < 1)
+            throw new PostException("이미지를 선택해 주세요");
+        else if(requestDto.getContents().length() < 1 || requestDto.getContents() == null)
+            throw new PostException("내용을 입력해 주세요.");
         Posts posts = new Posts(requestDto);
         postsRepository.save(posts);
     }
@@ -74,7 +83,15 @@ public class PostsService {
 
     //게시글 수정하기
     @Transactional
-    public void update(Long postId, PostUpdateRequestDto requestDto) {
+    public void update(Long postId, PostUpdateRequestDto requestDto) throws PostException {
+        if(requestDto.getCategory() <1)
+            throw new PostException("카타고리를 선택해 주세요");
+        else if (requestDto.getDevice()==null || requestDto.getDevice().length()<1)
+            throw new PostException("장치 이름을 입력해 주세요");
+        else if(requestDto.getImg() == null||requestDto.getImg().length() < 1)
+            throw new PostException("이미지를 선택해 주세요");
+        else if(requestDto.getContents().length() < 1 || requestDto.getContents() == null)
+            throw new PostException("내용을 입력해 주세요.");
         Posts post = postsRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다!"));
         post.update(requestDto);

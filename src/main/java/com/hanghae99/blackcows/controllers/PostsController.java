@@ -4,9 +4,12 @@ import com.hanghae99.blackcows.dto.PostDetailResponseDto;
 import com.hanghae99.blackcows.dto.PostUpdateRequestDto;
 import com.hanghae99.blackcows.dto.PostWriteRequestDto;
 import com.hanghae99.blackcows.dto.PostFindResponseDto;
+import com.hanghae99.blackcows.exceptions.PostException;
 import com.hanghae99.blackcows.services.PostsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +25,7 @@ public class PostsController {
 
     //게시글 작성 API
     @PostMapping("/api/post")
-    public void writePost(@RequestBody PostWriteRequestDto requestDto) {
+    public void writePost(@RequestBody PostWriteRequestDto requestDto) throws PostException {
         postsService.save(requestDto);
     }
 
@@ -40,7 +43,7 @@ public class PostsController {
 
     //게시글 수정 API
     @PatchMapping("/api/post/{postId}")
-    public void updatePost(@PathVariable Long postId, @RequestBody PostUpdateRequestDto requestDto) {
+    public void updatePost(@PathVariable Long postId, @RequestBody PostUpdateRequestDto requestDto) throws PostException {
         log.info("requestDto = {}", requestDto);
         postsService.update(postId, requestDto);
     }
@@ -49,6 +52,12 @@ public class PostsController {
     @DeleteMapping("/api/post/{postId}")
     public void deletePost(@PathVariable Long postId) {
         postsService.delete(postId);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity handleException(Exception e){
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
 }
