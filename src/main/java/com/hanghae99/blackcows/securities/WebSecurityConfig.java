@@ -24,12 +24,12 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
 
                 .and()
                 .logout()   //  로그아웃 시 쿠키 정보 삭제
                 .logoutUrl("/logout")   // ()로 로그아웃 요청
-                .logoutSuccessUrl("/")  // 로그아웃 성공시 ()
+                .logoutSuccessUrl("http://localhost:3030/login")  // 로그아웃 성공시 ()
 //                .invalidateHttpsSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID").permitAll()
@@ -37,7 +37,9 @@ public class WebSecurityConfig {
                 .and()
                 .oauth2Login()      //  oauth2 로그인 설정
                 .userInfoEndpoint()
-                .userService(loginService);  //  해당 서비스로 로긍니이 진행되도록 설정
+                .userService(loginService)
+                .and()
+                .defaultSuccessUrl("http://localhost:3030/");  //  해당 서비스로 로긍니이 진행되도록 설정
 
         return httpSecurity.build();
     }

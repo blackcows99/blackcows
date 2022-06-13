@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +20,10 @@ import java.util.List;
 public class PostsService {
 
     private final PostsRepository postsRepository;
-    private final CommentRepository commentRepository;
 
     //포스트 저장
     @Transactional
-    public void save(PostWriteRequestDto requestDto) throws PostException {
+    public void save(PostWriteRequestDto requestDto,Member member) throws PostException {
         if(requestDto.getCategory() <1)
             throw new PostException("카타고리를 선택해 주세요");
         else if (requestDto.getDevice()==null || requestDto.getDevice().length()<1)
@@ -33,6 +33,7 @@ public class PostsService {
         else if(requestDto.getContents().length() < 1 || requestDto.getContents() == null)
             throw new PostException("내용을 입력해 주세요.");
         Posts posts = new Posts(requestDto);
+        posts.setMember(member);
         postsRepository.save(posts);
     }
 
@@ -50,8 +51,9 @@ public class PostsService {
                     .score(r.getScore())
                     .device(r.getDevice())
                     .contents(r.getContents())
+                    .date(r.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                     .category(r.getCategory())
-//                    .member(r.getMember().getName())
+                    .member(r.getMember().getName())
                     .build());
         }
         return responseDtos;
@@ -75,7 +77,8 @@ public class PostsService {
                 .device(post.getDevice())
                 .contents(post.getContents())
                 .category(post.getCategory())
-                //.member(post.getMember().getName())
+                .date(post.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .member(post.getMember().getName())
                 .comments(comments)
                 .build();
     }

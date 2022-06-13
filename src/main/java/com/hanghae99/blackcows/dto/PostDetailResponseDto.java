@@ -20,6 +20,7 @@ public class PostDetailResponseDto {
     private String member;
     private String device;
     private String contents;
+    private String date;
     private boolean isEditable;
     private List<CommentDto> comments;
 }

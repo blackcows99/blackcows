@@ -25,8 +25,8 @@ public class PostsController {
 
     //게시글 작성 API
     @PostMapping("/api/post")
-    public void writePost(@RequestBody PostWriteRequestDto requestDto) throws PostException {
-        postsService.save(requestDto);
+    public void writePost(@RequestBody PostWriteRequestDto requestDto,@AuthenticationPrincipal OAuth2User user) throws PostException {
+        postsService.save(requestDto,user.getAttribute("member"));
     }
 
     //모든 게시글 조회 API
@@ -38,7 +38,8 @@ public class PostsController {
     //상세 페이지 조회 API
     @GetMapping("/api/post/{postId}")
     public PostDetailResponseDto findDetailPost(@PathVariable Long postId, @AuthenticationPrincipal OAuth2User user) {
-        return postsService.findDetail(postId,null);
+        System.out.println(user == null);
+        return postsService.findDetail(postId,user.getAttribute("member"));
     }
 
     //게시글 수정 API

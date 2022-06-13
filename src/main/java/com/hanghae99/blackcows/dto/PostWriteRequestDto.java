@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class PostWriteRequestDto {
     private int category;
     private int score;
+    private String date;
     private String contents;
     private String img;
     private String device;
