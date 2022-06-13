@@ -7,8 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-//@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -25,8 +25,10 @@ public class Member extends TimeStamp {
     private String email;
 
     public Member(String name, String email) {
-        super();
+       this.name = name;
+       this.email = email;
     }
+
 
 //    @Column(nullable = false)
 //    private String password;
