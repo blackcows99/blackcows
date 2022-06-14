@@ -42,14 +42,13 @@ public class PostsController {
 
     //상세 페이지 조회 API
     @GetMapping("/api/post/{postId}")
-    @UseCache(key = PostDetailResponseDto.class)
     public PostDetailResponseDto findDetailPost(@PathVariable Long postId, @AuthenticationPrincipal OAuth2User user) {
         return postsService.findDetail(postId,user.getAttribute("member"));
     }
 
     //게시글 수정 API
     @PatchMapping("/api/post/{postId}")
-    @DeleteCache(key={PostFindResponseDto.class,PostDetailResponseDto.class})
+    @DeleteCache(key={PostFindResponseDto.class})
     public void updatePost(@PathVariable Long postId, @RequestBody PostUpdateRequestDto requestDto) throws PostException {
         log.info("requestDto = {}", requestDto);
         postsService.update(postId, requestDto);

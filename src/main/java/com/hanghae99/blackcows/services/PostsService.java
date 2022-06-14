@@ -77,6 +77,7 @@ public class PostsService {
                 .device(post.getDevice())
                 .contents(post.getContents())
                 .category(post.getCategory())
+                .isEditable(post.getMember().getId() == member.getId())
                 .date(post.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .member(post.getMember().getName())
                 .comments(comments)

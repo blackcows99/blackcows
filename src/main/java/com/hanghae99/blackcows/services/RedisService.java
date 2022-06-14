@@ -81,8 +81,7 @@ public class RedisService {
             HttpServletRequest request =  ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String uri = request.getRequestURI();
             return Long.parseLong(uri.substring(uri.lastIndexOf("/") + 1));
-        }catch (Exception e){
-            e.printStackTrace();
+        }catch (NumberFormatException e){
             return 0L;
         }
     }
