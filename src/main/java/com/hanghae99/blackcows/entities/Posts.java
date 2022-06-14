@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.GeneratedValue;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -39,8 +40,8 @@ public class Posts extends TimeStamp {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(targetEntity = Comment.class,mappedBy = "posts",cascade = CascadeType.ALL)
-    private List<Comment> comment;
+    @OneToMany(targetEntity = Comment.class,cascade = CascadeType.ALL)
+    private List<Comment> comment = new ArrayList<>();
 
     public Posts(PostWriteRequestDto requestDto) {
         this.device = requestDto.getDevice();

@@ -2,13 +2,16 @@ package com.hanghae99.blackcows.dto;
 
 import com.hanghae99.blackcows.entities.Comment;
 import com.hanghae99.blackcows.entities.Member;
+import com.hanghae99.blackcows.interfaces.ReturnDTO;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @NoArgsConstructor
-public class CommentDto {
-    private long id;
+@Getter
+public class CommentDto implements ReturnDTO {
+    private Long id;
     private String member;
     private String comment;
     private boolean isDeleteable;

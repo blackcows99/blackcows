@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MemberController {
-    @GetMapping("/auth")
+    @GetMapping("/api/member")
     public Member getLoginMember(@AuthenticationPrincipal OAuth2User user){
-        return user.getAttribute("member");
+        if(user != null)
+            return user.getAttribute("member");
+        else
+            return null;
     }
 }

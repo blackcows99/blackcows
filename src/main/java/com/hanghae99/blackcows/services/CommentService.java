@@ -29,7 +29,7 @@ public class CommentService {
     @Transactional
     public void deleteComment(long commentid){
         Comment comment = commentRepo.findById(commentid).orElseThrow(()->new IllegalArgumentException("요청한 데이터를 찾을 수 없습니다."));
-        Posts post = comment.getPosts();
+        Posts post = postRepo.findByCommentId(commentid);
         post.removeComment(comment);
         postRepo.save(post);
         commentRepo.delete(comment);

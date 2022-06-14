@@ -20,9 +20,6 @@ public class Comment extends TimeStamp {
     @Column(nullable = false)
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "POSTS_ID")
-    private Posts posts;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn

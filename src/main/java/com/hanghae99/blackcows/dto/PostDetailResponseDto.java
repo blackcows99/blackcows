@@ -1,6 +1,7 @@
 package com.hanghae99.blackcows.dto;
 
 import com.hanghae99.blackcows.entities.Comment;
+import com.hanghae99.blackcows.interfaces.ReturnDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDetailResponseDto {
+public class PostDetailResponseDto implements ReturnDTO {
     private Long id;
     private int score;
     private int category;
