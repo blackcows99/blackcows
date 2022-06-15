@@ -2,6 +2,8 @@ package com.hanghae99.blackcows.services;
 
 import com.hanghae99.blackcows.annotations.DeleteCache;
 import com.hanghae99.blackcows.annotations.UseCache;
+import com.hanghae99.blackcows.dto.PostDetailResponseDto;
+import com.hanghae99.blackcows.dto.PostFindResponseDto;
 import com.hanghae99.blackcows.interfaces.ReturnDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,16 +13,19 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.ServletWebRequest;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 @Component
 @Aspect
@@ -29,11 +34,13 @@ import java.util.HashMap;
 public class RedisService {
     private final RedisTemplate<Class, HashMap<Long,Object>> template;
 
+    private final ApplicationEventPublisher eventPublisher;
     @AfterReturning("@annotation(com.hanghae99.blackcows.annotations.DeleteCache)")
     public void deleteCache(JoinPoint joinPoint){
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         DeleteCache annotation = methodSignature.getMethod().getAnnotation(DeleteCache.class);
         template.delete(Arrays.asList(annotation.key()));
+        eventPublisher.publishEvent("refresh");
     }
 
     @Around(value = "@annotation(com.hanghae99.blackcows.annotations.UseCache)")
@@ -97,5 +104,10 @@ public class RedisService {
             return new ArrayList<>(template.opsForValue().get(key).values());
         }
         return null;
+    }
+    @PostConstruct
+    public void deleteAll(){
+        Class[] arry = {PostDetailResponseDto.class, PostFindResponseDto.class};
+        template.delete(new ArrayList<>(List.of(arry)));
     }
 }

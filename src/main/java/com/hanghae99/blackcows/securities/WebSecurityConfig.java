@@ -29,8 +29,8 @@ public class WebSecurityConfig {
                 .and()
                 .logout()   //  로그아웃 시 쿠키 정보 삭제
                 .logoutUrl("/logout")   // ()로 로그아웃 요청
-                .logoutSuccessUrl("http://localhost:3030/login")  // 로그아웃 성공시 ()
-//                .invalidateHttpsSession(true)
+                .logoutSuccessUrl("http://localhost:3030/")  // 로그아웃 성공시 ()
+                .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID").permitAll()
 

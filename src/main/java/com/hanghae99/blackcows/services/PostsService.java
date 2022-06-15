@@ -8,6 +8,7 @@ import com.hanghae99.blackcows.exceptions.PostException;
 import com.hanghae99.blackcows.repositories.CommentRepository;
 import com.hanghae99.blackcows.repositories.PostsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -88,6 +89,7 @@ public class PostsService {
     //게시글 수정하기
     @Transactional
     public void update(Long postId, PostUpdateRequestDto requestDto) throws PostException {
+        System.out.println(requestDto.getCategory());
         if(requestDto.getCategory() <1)
             throw new PostException("카타고리를 선택해 주세요");
         else if (requestDto.getDevice()==null || requestDto.getDevice().length()<1)
