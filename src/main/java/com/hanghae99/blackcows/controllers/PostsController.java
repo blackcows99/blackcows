@@ -7,11 +7,9 @@ import com.hanghae99.blackcows.dto.PostUpdateRequestDto;
 import com.hanghae99.blackcows.dto.PostWriteRequestDto;
 import com.hanghae99.blackcows.dto.PostFindResponseDto;
 import com.hanghae99.blackcows.exceptions.PostException;
+import com.hanghae99.blackcows.securities.MemberDetail;
 import com.hanghae99.blackcows.services.PostsService;
-import com.hanghae99.blackcows.services.RedisService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.connector.ClientAbortException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
@@ -20,7 +18,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -42,8 +39,8 @@ public class PostsController {
     //게시글 작성 API
     @PostMapping("/api/post")
     @DeleteCache(key={PostFindResponseDto.class,PostDetailResponseDto.class})
-    public void writePost(@RequestBody PostWriteRequestDto requestDto,@AuthenticationPrincipal OAuth2User user) throws PostException {
-        postsService.save(requestDto,user.getAttribute("member"));
+    public void writePost(@RequestBody PostWriteRequestDto requestDto,@AuthenticationPrincipal MemberDetail user) throws PostException {
+        postsService.save(requestDto,user.getMember());
     }
 
     //모든 게시글 조회 API
@@ -56,8 +53,8 @@ public class PostsController {
     //상세 페이지 조회 API
     @GetMapping("/api/post/{postId}")
     @UseCache(key=PostDetailResponseDto.class)
-    public PostDetailResponseDto findDetailPost(@PathVariable Long postId, @AuthenticationPrincipal OAuth2User user) {
-        return postsService.findDetail(postId,user.getAttribute("member"));
+    public PostDetailResponseDto findDetailPost(@PathVariable Long postId, @AuthenticationPrincipal MemberDetail user) {
+        return postsService.findDetail(postId,user.getMember());
     }
 
     //게시글 수정 API

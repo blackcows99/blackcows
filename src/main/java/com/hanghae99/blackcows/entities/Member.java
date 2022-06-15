@@ -29,7 +29,10 @@ public class Member extends TimeStamp {
        this.email = email;
     }
 
-
+    @Override
+    public String toString(){
+        return "{\"id\":"+this.id+",\"name\":\""+this.name+"\",\"email\":\""+this.email+"\"}";
+    }
 //    @Column(nullable = false)
 //    private String password;
 }

@@ -12,6 +12,8 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +23,8 @@ import java.util.Map;
 public class OAuthLoginService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final MemberRepository repository;
+
+    private final HttpSession session;
 
 
     @Override
@@ -48,6 +52,7 @@ public class OAuthLoginService implements OAuth2UserService<OAuth2UserRequest, O
         // 정보가 없으면 가입
         Member member = registerIfNeeded(requestDto);
         copy.put("member",member);
+        session.setAttribute("member",member);
         // 인증 객체를 만들어서 return 한다.
         // Collections.emptyList()는 권한 목록이다.
         return new DefaultOAuth2User(Collections.emptyList(), copy, userNameAttributeName);

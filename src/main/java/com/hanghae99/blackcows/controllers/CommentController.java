@@ -1,20 +1,16 @@
 package com.hanghae99.blackcows.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.hanghae99.blackcows.annotations.DeleteCache;
 import com.hanghae99.blackcows.dto.CommentDto;
 import com.hanghae99.blackcows.dto.PostDetailResponseDto;
 import com.hanghae99.blackcows.entities.Comment;
-import com.hanghae99.blackcows.entities.Member;
 import com.hanghae99.blackcows.exceptions.CommentException;
+import com.hanghae99.blackcows.securities.MemberDetail;
 import com.hanghae99.blackcows.services.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,8 +19,8 @@ public class CommentController {
     private final CommentService service;
     @PostMapping("/api/comment/{postid}")
     @DeleteCache(key = {PostDetailResponseDto.class})
-    public Comment saveComment(@PathVariable("postid") Long postid, @RequestBody CommentDto commentDto, @AuthenticationPrincipal OAuth2User user) throws CommentException {
-        return service.saveComment(user.getAttribute("member"),commentDto.createComment(),postid.longValue());
+    public Comment saveComment(@PathVariable("postid") Long postid, @RequestBody CommentDto commentDto, @AuthenticationPrincipal MemberDetail user) throws CommentException {
+        return service.saveComment(user.getMember(),commentDto.createComment(),postid.longValue());
     }
     @DeleteMapping("/api/comment/{commentid}")
     @DeleteCache(key = {PostDetailResponseDto.class})
