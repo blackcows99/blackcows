@@ -1,19 +1,17 @@
 package com.hanghae99.blackcows.services;
 
 import com.hanghae99.blackcows.dto.*;
-import com.hanghae99.blackcows.entities.Comment;
 import com.hanghae99.blackcows.entities.Member;
 import com.hanghae99.blackcows.entities.Posts;
 import com.hanghae99.blackcows.exceptions.PostException;
-import com.hanghae99.blackcows.repositories.CommentRepository;
 import com.hanghae99.blackcows.repositories.PostsRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -70,7 +68,9 @@ public class PostsService {
 
         List<CommentDto> comments = new ArrayList<>();
         post.getComment().forEach(e->comments.add(new CommentDto(e,member)));
-
+        if(member != null)
+            System.out.println("is editable:" + (post.getMember().getId() == member.getId()));
+        Collections.reverse(comments);
         return PostDetailResponseDto.builder()
                 .id(post.getId())
                 .img(post.getImg())
@@ -78,7 +78,7 @@ public class PostsService {
                 .device(post.getDevice())
                 .contents(post.getContents())
                 .category(post.getCategory())
-                .isEditable(post.getMember().getId() == member.getId())
+                .isEditable(member==null?false:post.getMember().getId() == member.getId())
                 .date(post.getCreateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .member(post.getMember().getName())
                 .comments(comments)

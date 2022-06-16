@@ -10,13 +10,15 @@ public class CorsConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins("http://black-cow.s3-website.ap-northeast-2.amazonaws.com")
                 .allowedMethods(
                         HttpMethod.GET.name(),
                         HttpMethod.POST.name(),
                         HttpMethod.PUT.name(),
                         HttpMethod.PATCH.name(),
                         HttpMethod.DELETE.name()
-                );
+                )
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }

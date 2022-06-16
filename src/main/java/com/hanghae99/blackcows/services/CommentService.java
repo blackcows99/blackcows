@@ -21,6 +21,7 @@ public class CommentService {
         if(comment.getContent().length() < 1)
             throw new CommentException("댓글을 입력해 주세요.");
         comment.setMember(m);
+        comment = commentRepo.save(comment);
         posts.addComment(comment);
         postRepo.save(posts);
         return comment;

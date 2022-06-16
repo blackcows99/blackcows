@@ -1,6 +1,5 @@
 package com.hanghae99.blackcows.dto;
 
-import com.hanghae99.blackcows.entities.Comment;
 import com.hanghae99.blackcows.interfaces.ReturnDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

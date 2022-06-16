@@ -52,7 +52,9 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
     public MemberDetail getMemberDetail(String token){
-        return new MemberDetail(repo.findById(Long.parseLong(this.getUserPk(token))).get());
+        long id = Long.parseLong(getUserPk(token));
+        Member member = repo.findById(id).get();
+        return new MemberDetail(member);
     }
 
     // 토큰에서 회원 정보 추출

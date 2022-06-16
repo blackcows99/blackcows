@@ -18,7 +18,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +45,7 @@ public class RedisService {
     @Around(value = "@annotation(com.hanghae99.blackcows.annotations.UseCache)")
     public Object useCache(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+//        MemberDetail auth = (MemberDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UseCache annotation = methodSignature.getMethod().getAnnotation(UseCache.class);
         long id = getScope();
         if(template.hasKey(annotation.key())){

@@ -1,21 +1,14 @@
 package com.hanghae99.blackcows.securities;
 
+import com.hanghae99.blackcows.FinalValue;
 import com.hanghae99.blackcows.services.OAuthLoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity      //  Security 활성 어노테이션
@@ -43,8 +36,7 @@ public class WebSecurityConfig {
                 .and()
                 .logout()   //  로그아웃 시 쿠키 정보 삭제
                 .logoutUrl("/logout")   // ()로 로그아웃 요청
-                .logoutSuccessUrl("http://localhost:3030/")  // 로그아웃 성공시 ()
-                .invalidateHttpSession(true)
+                .logoutSuccessUrl(FinalValue.REDIRECT_URL)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID","member").permitAll()
 
